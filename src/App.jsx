@@ -6,6 +6,7 @@ import { Favorites, Home, Login, NewsDetail } from './pages'
 import { LoadingScreen, NavBar } from './assets/components'
 import { useDispatch, useSelector } from 'react-redux'
 import { productThunk } from './store/slices/Product.slice'
+import ProtectedRoute from './assets/components/ProtectedRoute'
 
 
 
@@ -21,8 +22,11 @@ function App() {
         {isloading && <LoadingScreen/>}
         <Routes>
           <Route path="/" element={<Home/>} />
-          <Route path="/favorites" element={<Favorites/>} />
+          
           <Route path="/product/:id" element={<NewsDetail/>} />
+          <Route element={<ProtectedRoute/>}>
+            <Route path="/favorites" element={<Favorites/>} />
+          </Route>
           <Route path="/login" element={<Login/>}  />
         </Routes>
       </HashRouter>

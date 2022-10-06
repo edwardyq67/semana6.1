@@ -18,7 +18,18 @@ export const productThunk = () => (dispatch) => {
         .then((res) => dispatch(setProduct(res.data.data.products)))
         .finally(() => dispatch(setIsloading(false)));//pantalla de carga
 }
-
+export const thunkName = (name) => (dispatch) => {
+    dispatch(setIsloading(true));
+    return axios.get(`https://ecommerce-api-react.herokuapp.com/api/v1/products?query=${name}`)
+        .then((res) => dispatch(setProduct(res.data.data.products)))
+        .finally(() => dispatch(setIsloading(false)));
+}
+export const thunkid = (id) => (dispatch) => {
+    dispatch(setIsloading(true));
+    return axios.get(`https://ecommerce-api-react.herokuapp.com/api/v1/products?category=${id}`)
+        .then((res) => dispatch(setProduct(res.data.data.products)))
+        .finally(() => dispatch(setIsloading(false)));
+}
 export const { setProduct } = ProductSlice.actions;
 
 export default ProductSlice.reducer;

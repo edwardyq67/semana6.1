@@ -26,3 +26,15 @@ thead{
   width: 20%;
   display: inline-block;
 }
+.home{
+  width: 90%;
+  height: 100vh;
+  margin: auto;
+  margin-top: 10px;
+}
+.newDetail{
+  width: 90%;
+  height: 100vh;
+  margin: auto;
+  margin-top: 10px;
+}

@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {  productThunk } from '../store/slices/Product.slice';
+import {  productThunk, thunkid, thunkName } from '../store/slices/Product.slice';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 import { Button } from 'react-bootstrap';
 const Home = () => {
    const [category,setCategory]=useState([])
-   const [filtid,setFiltid]=useState({})
-   const [name,setName]=useState("")
+   
+   const[name,setName]=useState("")
     const navigate=useNavigate()
     const dispatch=useDispatch()
     useEffect(()=>{
@@ -22,28 +23,32 @@ const Home = () => {
     axios.get("https://ecommerce-api-react.herokuapp.com/api/v1/products/categories")
     .then(res=>setCategory(res.data.data.categories))
    },[])
-    const filterCategory=()=>{
-      const filter=productSlice.filter(catId=catId.category.id===category.id)
     
-      console.log(filter)
-    }
     
     return (
-        <div>
-            home
-           
+        <div className='home'>
+      
+      <form className="d-flex">
+        <label htmlFor="text"></label>
+          <input value={name} onChange={e=>setName(e.target.value)} className="form-control me-sm-2" type="text" placeholder="Search"/>
+       <button onClick={()=>dispatch(thunkName(name))} className="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+        
+       
+
+      </form>
+      <hr />
+      <Row><Col>
+            <ListGroup>
         {
-              category.map?.(categ=>(
-                
-         
-              <Button key={categ.id} onClick={filterCategory}><h2>{categ.name}</h2></Button>
-          
-              ))
-            }
+          category.map(categ=>(
+            <ListGroup.Item onClick={()=>dispatch(thunkid(categ.id))} key={categ.id}>{categ.name}</ListGroup.Item>
+          ))
+        }
       
       
-            
-              
+    </ListGroup>
+      </Col>
+    <Col lg={10}>
             
             <Row  md={3}  className="g-4">
       {productSlice.map(newsItem => (
@@ -57,6 +62,9 @@ const Home = () => {
           </Card>
         </Col>
       ))}
+      
+    </Row>
+    </Col>
     </Row>
         </div>
     );
