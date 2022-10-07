@@ -1,16 +1,30 @@
-import React from 'react';
-import { Offcanvas } from 'react-bootstrap';
+import React, { useEffect } from 'react';
+import { ListGroup, Offcanvas } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { cartFavorite } from '../../store/slices/cart.slice';
 
 const CardsSil =({show,handleClose}) => {
+  const carts=useSelector(state=>state.cart)
+  const dispatch=useDispatch()
+  useEffect(()=>{
+    dispatch(cartFavorite())
+  },[])
     return (
         <div>
                <Offcanvas show={show} onHide={handleClose} placement="end">
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+          <Offcanvas.Title>Cart</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          Some text as placeholder. In real life you can have the elements you
-          have chosen. Like, text, images, lists, etc.
+          <ListGroup>
+            {
+              carts.map(cart=>(
+                <ListGroup.Item >
+
+                </ListGroup.Item>
+              ))
+            }
+          </ListGroup>
         </Offcanvas.Body>
       </Offcanvas>
         </div>

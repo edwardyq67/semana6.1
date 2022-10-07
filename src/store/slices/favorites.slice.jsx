@@ -17,6 +17,7 @@ export const favoriteThunk = () => (dispatch) => {
         .then((res) => dispatch(setFavorites(res.data.data.purchases)))
         .finally(() => dispatch(setIsloading(false)));
 }
+
 export const { setFavorites } = favoritesSlice.actions;
 
 export default favoritesSlice.reducer;
